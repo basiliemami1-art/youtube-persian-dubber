@@ -1,0 +1,61 @@
+# ---------------------------------------------------------------------------
+# Python virtual environment for the local Piper server.
+# Recreated by server/run.ps1 on first launch.
+# ---------------------------------------------------------------------------
+server/.venv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ---------------------------------------------------------------------------
+# Piper voice models.
+#
+# Each is ~63 MB and they are NOT source: server/download_models.py fetches
+# them from the upstream Piper release on demand. Committing them would make
+# the repository hundreds of megabytes for files git cannot diff.
+# ---------------------------------------------------------------------------
+server/models/
+*.onnx
+*.onnx.json
+
+# ---------------------------------------------------------------------------
+# Secrets.
+#
+# The Gemini API key belongs in the extension's own storage, entered through
+# the options page -- never in a file in this tree.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.key
+secrets.json
+
+# ---------------------------------------------------------------------------
+# Build output and packaging
+# ---------------------------------------------------------------------------
+dist/
+build/
+*.zip
+*.crx
+*.pem
+node_modules/
+
+# ---------------------------------------------------------------------------
+# Editors and operating systems
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# ---------------------------------------------------------------------------
+# Runtime noise from the local server
+# ---------------------------------------------------------------------------
+*.log
+server/*.log
+server/output/

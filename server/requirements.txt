@@ -1,0 +1,8 @@
+# Only needed for the optional local server (neural Piper voices).
+# The extension itself works with zero Python installed.
+
+piper-tts>=1.2.0
+
+# Optional, offline translation without Ollama. Persian packages are large and
+# noticeably lower quality than a modern LLM, so this stays commented out.
+# argostranslate>=1.9.0

@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>تنظیمات دوبله فارسی یوتیوب</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <header>
+      <h1>دوبله فارسی یوتیوب</h1>
+      <p class="sub">
+        زیرنویس ویدیو را می‌گیرد، به فارسی ترجمه می‌کند و همزمان با تصویر می‌خواند.
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <h2>عمومی</h2>
+
+        <label class="row switch">
+          <input type="checkbox" id="autoStart" />
+          <span>
+            <b>شروع خودکار</b>
+            <i>با باز شدن هر ویدیو، دوبله بدون کلیک شروع شود.</i>
+          </span>
+        </label>
+
+        <label class="row switch">
+          <input type="checkbox" id="showPanel" />
+          <span>
+            <b>نمایش پنل روی پلیر</b>
+            <i>کنترل شروع/توقف و سرعت داخل خود ویدیو.</i>
+          </span>
+        </label>
+
+        <label class="row switch">
+          <input type="checkbox" id="hotkey" />
+          <span>
+            <b>کلید میان‌بر Shift+D</b>
+            <i>روشن و خاموش کردن دوبله با صفحه‌کلید.</i>
+          </span>
+        </label>
+
+        <label class="row switch">
+          <input type="checkbox" id="preferManualCaptions" />
+          <span>
+            <b>ترجیح زیرنویس دستی</b>
+            <i>
+              اگر ویدیو هم زیرنویس انسانی دارد و هم خودکار، انسانی انتخاب شود.
+              کیفیت به‌مراتب بهتر است.
+            </i>
+          </span>
+        </label>
+      </section>
+
+      <section>
+        <h2>ترجمه</h2>
+
+        <label class="row">
+          <span class="label">موتور ترجمه</span>
+          <select id="translator">
+            <option value="gemini">Gemini با کلید API (بهترین کیفیت)</option>
+            <option value="google">جمله‌کامل + Google (بدون کلید)</option>
+            <option value="youtube">یوتیوب (رسمی، بدون محدودیت)</option>
+            <option value="libre">LibreTranslate</option>
+            <option value="local">سرور محلی (Ollama)</option>
+          </select>
+        </label>
+        <p class="hint" id="translatorHint"></p>
+
+        <div class="row conditional" data-when="gemini">
+          <span class="label">
+            کلید API
+            <i class="tip">فقط در همین مرورگر ذخیره می‌شود</i>
+          </span>
+          <input type="password" id="geminiApiKey" autocomplete="off"
+                 spellcheck="false" placeholder="AIza…" />
+        </div>
+        <div class="row conditional" data-when-translator="gemini">
+          <span class="label">مدل</span>
+          <select id="geminiModel"></select>
+        </div>
+        <div class="row conditional" data-when="gemini">
+          <span class="label"></span>
+          <button type="button" class="ghost" id="checkGemini">بررسی کلید و دریافت مدل‌ها</button>
+        </div>
+        <p class="hint conditional" data-when="gemini" id="geminiHint"></p>
+
+        <label class="row switch conditional" data-when-translator="gemini">
+          <input type="checkbox" id="adaptToDuration" />
+          <span>
+            <b>تنظیم طول جمله با زمان موجود</b>
+            <i>
+              به مدل گفته می‌شود هر جمله چند ثانیه وقت دارد تا همان‌قدر بنویسد.
+              این کاری است که دوبله‌ی واقعی می‌کند: به‌جای تندخواندن، جمله کوتاه‌تر
+              می‌شود. خاموش کنید تا ترجمه‌ی وفادار و تحت‌اللفظی بگیرید.
+            </i>
+          </span>
+        </label>
+
+        <label class="row switch conditional" data-when-translator="gemini">
+          <input type="checkbox" id="geminiFallback" />
+          <span>
+            <b>اگر Gemini خطا داد، از مترجم جایگزین استفاده شود</b>
+            <i>
+              پیش‌فرض خاموش است تا خطای API پنهان نشود. با روشن‌کردن، افزونه ابتدا
+              Google و سپس ترجمهٔ یوتیوب را امتحان می‌کند و روی پنل هشدار می‌دهد.
+            </i>
+          </span>
+        </label>
+
+        <div class="row conditional" data-when="libre">
+          <span class="label">آدرس LibreTranslate</span>
+          <input type="url" id="libreEndpoint" placeholder="http://127.0.0.1:5000/translate" />
+        </div>
+        <div class="row conditional" data-when="libre">
+          <span class="label">کلید API (اختیاری)</span>
+          <input type="text" id="libreApiKey" placeholder="" />
+        </div>
+
+        <div class="row">
+          <span class="label">
+            آزمایش ترجمه
+            <i class="tip">ببینید موتور فعلی واقعاً چه چیزی تولید می‌کند</i>
+          </span>
+          <button type="button" class="ghost" id="testTranslate">ترجمه چند جمله نمونه</button>
+        </div>
+        <div id="translateSample" class="sample" hidden></div>
+
+        <label class="row switch">
+          <input type="checkbox" id="cacheEnabled" />
+          <span>
+            <b>ذخیره ترجمه‌ها</b>
+            <i>دفعه بعد همان ویدیو بدون تأخیر شروع می‌شود. ۲۵ ویدیوی آخر نگه داشته می‌شود.</i>
+          </span>
+        </label>
+      </section>
+
+      <section>
+        <h2>صدا</h2>
+
+        <label class="row">
+          <span class="label">موتور گفتار</span>
+          <select id="ttsEngine">
+            <option value="gemini">Gemini TTS (صدای طبیعی آنلاین، نیازمند کلید)</option>
+            <option value="piper">Piper محلی (کیفیت بهتر، نیاز به سرور)</option>
+            <option value="webspeech">صدای ویندوز (اگر صدای فارسی نصب باشد)</option>
+          </select>
+        </label>
+
+        <div class="row conditional" data-when-tts="gemini">
+          <span class="label">مدل گفتار</span>
+          <select id="geminiTtsModel"></select>
+        </div>
+        <div class="row conditional" data-when-tts="gemini">
+          <span class="label">صدای Gemini</span>
+          <select id="geminiVoice">
+            <option value="Kore">Kore — محکم و حرفه‌ای</option>
+            <option value="Sulafat">Sulafat — گرم</option>
+            <option value="Achird">Achird — دوستانه</option>
+            <option value="Gacrux">Gacrux — پخته</option>
+            <option value="Iapetus">Iapetus — شفاف</option>
+            <option value="Charon">Charon — اطلاع‌رسان</option>
+            <option value="Aoede">Aoede — سبک و روان</option>
+            <option value="Puck">Puck — پرانرژی</option>
+            <option value="Schedar">Schedar — متعادل</option>
+            <option value="Vindemiatrix">Vindemiatrix — ملایم</option>
+            <option value="Sadaltager">Sadaltager — آگاه و رسمی</option>
+          </select>
+        </div>
+        <div class="row conditional" data-when-tts="gemini">
+          <span class="label">سبک اجرا</span>
+          <select id="geminiTtsStyle">
+            <option value="natural, warm, clear and unobtrusive professional video dubbing">طبیعی و گرم (پیشنهادی)</option>
+            <option value="clear, neutral and authoritative documentary narration">مستند، شفاف و جدی</option>
+            <option value="friendly, relaxed and conversational, like a Persian YouTube presenter">دوستانه و محاوره‌ای</option>
+            <option value="energetic and engaging while staying intelligible">پرانرژی</option>
+            <option value="calm, measured and reassuring">آرام و اطمینان‌بخش</option>
+          </select>
+        </div>
+        <label class="row range conditional" data-when-tts="gemini">
+          <span class="label">
+            خواندن پیوسته
+            <i class="tip">
+              چند جمله در یک درخواست خوانده و بعد روی سکوت‌ها بریده می‌شود؛ لحن بین
+              جمله‌ها قطع نمی‌شود. مصرف سهمیه را هم کم می‌کند.
+            </i>
+          </span>
+          <input type="range" id="groupSentences" min="1" max="5" step="1" />
+          <output data-for="groupSentences"></output>
+        </label>
+
+        <label class="row switch conditional" data-when-tts="gemini">
+          <input type="checkbox" id="multiSpeaker" />
+          <span>
+            <b>صدای جدا برای هر گوینده</b>
+            <i>
+              در مصاحبه و گفتگو، وقتی مترجم تغییر گوینده را تشخیص دهد نفر دوم با
+              صدای دیگری خوانده می‌شود. در روایت تک‌نفره اثری ندارد.
+            </i>
+          </span>
+        </label>
+
+        <p class="hint conditional" data-when-tts="gemini">
+          صدای Gemini آنلاین و در وضعیت Preview است و برای هر جمله از سهمیه API استفاده می‌کند.
+          اگر در دسترس نباشد، افزونه خودکار Piper و سپس صدای ویندوز را امتحان می‌کند.
+        </p>
+
+        <div class="row conditional" data-when="webspeech">
+          <span class="label">صدا</span>
+          <select id="voiceURI"></select>
+        </div>
+        <p class="hint conditional" data-when="webspeech" id="voiceHint"></p>
+
+        <div class="row conditional" data-when="piper">
+          <span class="label">آدرس سرور محلی</span>
+          <input type="url" id="localEndpoint" placeholder="http://127.0.0.1:8760" />
+        </div>
+        <div class="row conditional" data-when="piper">
+          <span class="label">صدای Piper</span>
+          <select id="piperVoice"></select>
+        </div>
+        <div class="row conditional" data-when="piper">
+          <span class="label"></span>
+          <button type="button" class="ghost" id="checkServer">بررسی اتصال سرور</button>
+        </div>
+        <p class="hint conditional" data-when="piper" id="serverHint"></p>
+
+        <div class="row">
+          <span class="label">آزمایش</span>
+          <button type="button" class="ghost" id="testVoice">پخش نمونه</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>همگام‌سازی</h2>
+
+        <label class="row">
+          <span class="label">
+            وقتی جمله جا نمی‌شود
+            <i class="tip">بعد از اینکه تندخوانی به سقفش رسید</i>
+          </span>
+          <select id="overrunPolicy">
+            <option value="stretch">تصویر کمی آرام شود (پیشنهادی)</option>
+            <option value="compress">هیچ؛ کمی تأخیر بپذیر</option>
+            <option value="pause">تصویر متوقف شود تا جمله تمام شود</option>
+          </select>
+        </label>
+        <p class="hint" id="policyHint"></p>
+
+        <label class="row range conditional" data-when="stretch">
+          <span class="label">
+            کندترین حالت تصویر
+            <i class="tip">۱ یعنی تصویر اصلاً دست نخورد</i>
+          </span>
+          <input type="range" id="minPlaybackRate" min="0.75" max="1" step="0.01" />
+          <output data-for="minPlaybackRate"></output>
+        </label>
+
+        <label class="row range conditional" data-when="pause">
+          <span class="label">حداکثر مکث تصویر</span>
+          <input type="range" id="pauseMaxSeconds" min="1" max="10" step="0.5" />
+          <output data-for="pauseMaxSeconds"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            سرعت پایه گفتار
+            <i class="tip">وقتی وقت کافی هست</i>
+          </span>
+          <input type="range" id="baseRate" min="0.7" max="1.5" step="0.05" />
+          <output data-for="baseRate"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            حداکثر تندخوانی
+            <i class="tip">
+              آخرین راه‌حل است، نه اولی: اول متن کوتاه می‌شود و بعد تصویر کمی آرام
+              می‌شود. بالای ۱.۲ شنونده تندخوانی را حس می‌کند.
+            </i>
+          </span>
+          <input type="range" id="maxRate" min="1" max="1.6" step="0.05" />
+          <output data-for="maxRate"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            زودتر شروع کردن مجاز
+            <i class="tip">جمله می‌تواند تا این اندازه قبل از زیرنویس شروع شود</i>
+          </span>
+          <input type="range" id="maxLead" min="0" max="1" step="0.05" />
+          <output data-for="maxLead"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            دیرتر شروع کردن مجاز
+            <i class="tip">هرچه بیشتر، فشردگی کمتر ولی همگامی شل‌تر</i>
+          </span>
+          <input type="range" id="maxLag" min="0" max="2" step="0.05" />
+          <output data-for="maxLag"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            صدای اصلی هنگام دوبله
+            <i class="tip">۰ یعنی کامل قطع</i>
+          </span>
+          <input type="range" id="duckVolume" min="0" max="0.6" step="0.01" />
+          <output data-for="duckVolume"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            سرعت پایین آمدن صدای اصلی
+            <i class="tip">باید قبل از اولین هجا پایین آمده باشد</i>
+          </span>
+          <input type="range" id="duckAttackMs" min="20" max="200" step="10" />
+          <output data-for="duckAttackMs"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            سرعت برگشت صدای اصلی
+            <i class="tip">
+              کند بودنش عمدی است؛ برگشت سریع باعث می‌شود دوبله مثل افکتی که خاموش و
+              روشن می‌شود به گوش برسد
+            </i>
+          </span>
+          <input type="range" id="duckReleaseMs" min="80" max="600" step="20" />
+          <output data-for="duckReleaseMs"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            نگه داشتن بین جمله‌ها
+            <i class="tip">
+              فاصلهٔ کوتاه‌تر از این، صدای اصلی برنمی‌گردد؛ جلوی بالا و پایین شدن
+              مکرر صدا را می‌گیرد
+            </i>
+          </span>
+          <input type="range" id="duckHoldSeconds" min="0" max="3" step="0.1" />
+          <output data-for="duckHoldSeconds"></output>
+        </label>
+
+        <label class="row range">
+          <span class="label">
+            کالیبراسیون سرعت خواندن
+            <i class="tip">
+              فقط برای صدای ویندوز؛ Piper طول واقعی هر جمله را اندازه می‌گیرد
+            </i>
+          </span>
+          <input type="range" id="charsPerSecond" min="7" max="20" step="0.5" />
+          <output data-for="charsPerSecond"></output>
+        </label>
+      </section>
+
+      <section>
+        <h2>پیشرفته</h2>
+        <label class="row switch">
+          <input type="checkbox" id="condensePass" />
+          <span>
+            <b>کوتاه‌سازی جمله‌های بلند (پاس دوم)</b>
+            <i>
+              بعد از آماده شدن صدا، سرعت واقعی خواندن اندازه‌گیری می‌شود و جمله‌هایی
+              که هنوز جا نمی‌شوند دوباره و کوتاه‌تر نوشته می‌شوند — همان کاری که در
+              دوبلهٔ حرفه‌ای اول از همه انجام می‌شود. یک درخواست Gemini اضافه دارد.
+              فقط با مترجم Gemini کار می‌کند.
+            </i>
+          </span>
+        </label>
+        <label class="row switch">
+          <input type="checkbox" id="debug" />
+          <span>
+            <b>گزارش در کنسول</b>
+            <i>برای عیب‌یابی؛ لاگ‌ها با پیشوند <code>[dub]</code> چاپ می‌شوند.</i>
+          </span>
+        </label>
+        <div class="row">
+          <span class="label"></span>
+          <button type="button" class="ghost danger" id="reset">بازگشت به پیش‌فرض‌ها</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span id="saved" class="saved"></span>
+    </footer>
+
+    <script src="../content/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

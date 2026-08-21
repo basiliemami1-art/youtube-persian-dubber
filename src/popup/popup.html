@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>دوبله فارسی</title>
+    <style>
+      :root {
+        --bg: #17181c;
+        --line: #2a2b32;
+        --text: #ececf1;
+        --muted: #9a9aa5;
+        --accent: #7c5cff;
+      }
+      @media (prefers-color-scheme: light) {
+        :root { --bg: #fff; --line: #e4e4ea; --text: #1a1a1f; --muted: #6b6b78; }
+      }
+      * { box-sizing: border-box; }
+      body {
+        width: 268px;
+        margin: 0;
+        padding: 14px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+        font-size: 13px;
+      }
+      h1 { font-size: 14px; margin: 0 0 10px; }
+      .status {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 12px;
+        min-height: 32px;
+      }
+      button {
+        width: 100%;
+        border: 0;
+        border-radius: 9px;
+        padding: 9px 0;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+        background: var(--accent);
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      button.ghost {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--line);
+        font-weight: 500;
+      }
+      .field {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 12px;
+      }
+      .field span { flex: 0 0 74px; color: var(--muted); }
+      select {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 5px 7px;
+        font: inherit;
+        font-size: 12px;
+      }
+      kbd {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0 4px;
+        font-size: 11px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>دوبله فارسی یوتیوب</h1>
+    <div class="status" id="status">…</div>
+
+    <button id="toggle">شروع / توقف دوبله</button>
+
+    <div class="field">
+      <span>ترجمه</span>
+      <select id="translator">
+        <option value="gemini">Gemini</option>
+        <option value="youtube">یوتیوب</option>
+        <option value="google">Google</option>
+        <option value="libre">LibreTranslate</option>
+        <option value="local">سرور محلی</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <span>صدا</span>
+      <select id="ttsEngine">
+        <option value="gemini">Gemini TTS</option>
+        <option value="piper">Piper محلی</option>
+        <option value="webspeech">صدای ویندوز</option>
+      </select>
+    </div>
+
+    <button class="ghost" id="options">تنظیمات کامل</button>
+    <div class="status" style="min-height:0;margin:6px 0 0">
+      میان‌بر داخل صفحه: <kbd>Shift</kbd> + <kbd>D</kbd>
+    </div>
+
+    <script src="../content/settings.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
