@@ -103,7 +103,7 @@
 ## نصب سریع
 
 ```bash
-git clone https://github.com/OWNER_PLACEHOLDER/youtube-persian-dubber.git
+git clone https://github.com/basiliemami1-art/youtube-persian-dubber.git
 ```
 
 1. در کروم به `chrome://extensions` بروید.
