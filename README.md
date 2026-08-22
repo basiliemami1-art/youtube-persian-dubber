@@ -8,9 +8,12 @@
 و همزمان با تصویر می‌خواند — با کارگردانی لحن، خواندن پیوسته و میکس حرفه‌ای.
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-4285F4?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![Version](https://img.shields.io/badge/version-0.4.0-brightgreen)](#تغییرات-نسخهٔ-۰۴)
+[![Version](https://img.shields.io/github/v/release/basiliemami1-art/youtube-persian-dubber?label=version&color=brightgreen)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest)
 [![Tests](https://img.shields.io/badge/tests-36%20passing-success)](#اجرای-آزمون‌ها)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+[![دانلود آخرین نسخه](https://img.shields.io/badge/دانلود_آخرین_نسخه-ZIP-168039?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip)
+[![همهٔ نسخه‌ها](https://img.shields.io/badge/همهٔ_نسخه‌ها-Releases-24292f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases)
 
 </div>
 
@@ -100,19 +103,33 @@
 
 ---
 
-## نصب سریع
+## دانلود و نصب سریع
+
+<div align="center">
+
+[![دانلود برای Chrome، Edge و Brave](https://img.shields.io/badge/دانلود_برای_Chrome،_Edge_و_Brave-ZIP-168039?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip)
+
+</div>
+
+1. دکمهٔ بالا را بزنید و فایل ZIP آخرین نسخه را دانلود کنید.
+2. فایل را از حالت فشرده خارج کنید.
+3. در مرورگر به `chrome://extensions` بروید.
+4. **Developer mode** را از گوشهٔ بالا روشن کنید.
+5. **Load unpacked** را بزنید و پوشهٔ `youtube-persian-dubber` را انتخاب کنید.
+6. صفحهٔ تنظیمات خودکار باز می‌شود. برای کیفیت اصلی، کلید Gemini را وارد کنید و دکمهٔ
+   **بررسی کلید و دریافت مدل‌ها** را بزنید؛ یا یک مترجم بدون کلید انتخاب کنید.
+7. یک ویدیوی انگلیسی یوتیوب باز کنید و روی پنل «دوبله فارسی» گوشهٔ پلیر، **شروع دوبله** را بزنید.
+   (یا کلید `Shift` + `D`)
+
+فایل‌های همهٔ نسخه‌ها همراه با checksum در [بخش Releases](https://github.com/basiliemami1-art/youtube-persian-dubber/releases) نگهداری می‌شوند.
+
+### نصب از کد منبع
 
 ```bash
 git clone https://github.com/basiliemami1-art/youtube-persian-dubber.git
 ```
 
-1. در کروم به `chrome://extensions` بروید.
-2. **Developer mode** را از گوشه‌ی بالا روشن کنید.
-3. **Load unpacked** را بزنید و پوشهٔ کلون‌شده را انتخاب کنید.
-4. صفحهٔ تنظیمات خودکار باز می‌شود. برای کیفیت اصلی، کلید Gemini را وارد کنید و دکمهٔ
-   **بررسی کلید و دریافت مدل‌ها** را بزنید؛ یا یک مترجم بدون کلید انتخاب کنید.
-5. یک ویدیوی انگلیسی یوتیوب باز کنید و روی پنل «دوبله فارسی» گوشه‌ی پلیر، **شروع دوبله** را بزنید.
-   (یا کلید `Shift` + `D`)
+پس از کلون، همان مراحل ۳ تا ۷ بالا را با پوشهٔ کلون‌شده انجام دهید.
 
 ### اگر Piper را انتخاب می‌کنید، سرور باید در حال اجرا باشد
 

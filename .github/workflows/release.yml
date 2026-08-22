@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@v6
+
+      - name: Verify tag and extension versions match
+        shell: bash
+        run: |
+          tag_version="${GITHUB_REF_NAME#v}"
+          manifest_version="$(node -p "require('./manifest.json').version")"
+
+          if [[ "$tag_version" != "$manifest_version" ]]; then
+            echo "Tag version ($tag_version) does not match manifest version ($manifest_version)."
+            exit 1
+          fi
+
+      - name: Run tests
+        run: node --test tests/*.test.js
+
+      - name: Build installable ZIP
+        shell: bash
+        run: |
+          package_dir="dist/youtube-persian-dubber"
+          mkdir -p "$package_dir"
+
+          cp manifest.json LICENSE README.md "$package_dir/"
+          cp -R icons src server "$package_dir/"
+          find "$package_dir" -type d \( -name .venv -o -name models -o -name __pycache__ \) -prune -exec rm -rf {} +
+          find "$package_dir" -type f \( -name '*.pyc' -o -name '*.pyo' \) -delete
+
+          (cd dist && zip -9 -q -r youtube-persian-dubber.zip youtube-persian-dubber)
+          (cd dist && sha256sum youtube-persian-dubber.zip > youtube-persian-dubber.zip.sha256)
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          download_url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/youtube-persian-dubber.zip"
+          notes="## دانلود مستقیم
+
+          | مرورگر | دانلود |
+          |---|---|
+          | Chrome / Edge / Brave | [دانلود فایل ZIP](${download_url}) |
+
+          پس از دانلود، فایل را از حالت فشرده خارج کنید و پوشهٔ \`youtube-persian-dubber\` را از مسیر \`chrome://extensions\` با گزینهٔ **Load unpacked** انتخاب کنید.
+
+          برای بررسی سلامت فایل، checksum ضمیمه‌شده را با فایل ZIP مقایسه کنید."
+
+          gh release create "$GITHUB_REF_NAME" \
+            dist/youtube-persian-dubber.zip \
+            dist/youtube-persian-dubber.zip.sha256 \
+            --verify-tag \
+            --latest \
+            --title "دوبله فارسی یوتیوب ${GITHUB_REF_NAME}" \
+            --generate-notes \
+            --notes "$notes"
