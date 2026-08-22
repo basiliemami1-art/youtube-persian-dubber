@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="92" viewBox="0 0 560 92" role="img" aria-labelledby="title desc">
+  <title id="title">دانلود آخرین نسخه ZIP</title>
+  <desc id="desc">دکمهٔ دانلود مستقیم آخرین نسخهٔ افزونه</desc>
+  <defs>
+    <clipPath id="corners">
+      <rect width="560" height="92" rx="8"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#corners)">
+    <rect width="430" height="92" fill="#555"/>
+    <rect x="430" width="130" height="92" fill="#168039"/>
+  </g>
+  <circle cx="48" cy="46" r="27" fill="#fff"/>
+  <path d="M48 26v35m-13-13 13 13 13-13" fill="none" stroke="#555" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="252" y="57" fill="#fff" font-family="Tahoma, Arial, sans-serif" font-size="29" font-weight="700" text-anchor="middle" direction="rtl" unicode-bidi="bidi-override">دانلود آخرین نسخه</text>
+  <text x="495" y="59" fill="#fff" font-family="Verdana, Arial, sans-serif" font-size="31" font-weight="700" text-anchor="middle" letter-spacing="2">ZIP</text>
+</svg>

@@ -12,8 +12,8 @@
 [![Tests](https://img.shields.io/badge/tests-36%20passing-success)](#اجرای-آزمون‌ها)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[![دانلود آخرین نسخه](https://img.shields.io/badge/دانلود_آخرین_نسخه-ZIP-168039?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip)
-[![همهٔ نسخه‌ها](https://img.shields.io/badge/همهٔ_نسخه‌ها-Releases-24292f?style=for-the-badge&logo=github&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases)
+<a href="https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip"><img src=".github/assets/download-latest.svg" alt="دانلود آخرین نسخه ZIP" height="46"></a>
+<a href="https://github.com/basiliemami1-art/youtube-persian-dubber/releases"><img src=".github/assets/all-releases.svg" alt="مشاهدهٔ همهٔ نسخه‌ها" height="46"></a>
 
 </div>
 
@@ -107,7 +107,7 @@
 
 <div align="center">
 
-[![دانلود برای Chrome، Edge و Brave](https://img.shields.io/badge/دانلود_برای_Chrome،_Edge_و_Brave-ZIP-168039?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip)
+<a href="https://github.com/basiliemami1-art/youtube-persian-dubber/releases/latest/download/youtube-persian-dubber.zip"><img src=".github/assets/download-latest.svg" alt="دانلود آخرین نسخه برای Chrome، Edge و Brave" height="54"></a>
 
 </div>
 
